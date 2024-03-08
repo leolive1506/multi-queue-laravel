@@ -182,8 +182,21 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default', 'high', 'low'],
-            'balance' => 'auto', // simple (igualmente entre os processos), auto (de acordo com a fila faz o rebalanceamento), false
+            'queue' => ['default', 'low'],
+            'balance' => 'auto', // simple (igualmente entre os processos), auto (de acordo com a fila faz o rebalanceamento), false (mesmo comportamento queue:work - atende todos de acordo com a prioridade high -> low -> defaul)
+            'autoScalingStrategy' => 'time',
+            'maxProcesses' => 1,
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 128,
+            'tries' => 1,
+            'timeout' => 60,
+            'nice' => 0,
+        ],
+        'supervisor-2' => [
+            'connection' => 'redis',
+            'queue' => ['high'],
+            'balance' => 'auto',
             'autoScalingStrategy' => 'time',
             'maxProcesses' => 1,
             'maxTime' => 0,
@@ -207,6 +220,10 @@ return [
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 9,
+            ],
+            // criando serviço de alta prioridade
+            'supervisor-2' => [
+                'maxProcesses' => 20,
             ],
         ],
     ],

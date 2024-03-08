@@ -20,14 +20,16 @@ class SendJobs extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send jobs commands';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        HighJob::dispatch()->onConnection('database');
-        LowJob::dispatch();
+        // HighJob::dispatch()->onConnection('database');
+        // LowJob::dispatch();
+        HighJob::dispatch()->onQueue('high');
+        LowJob::dispatch()->onQueue('low');;
     }
 }

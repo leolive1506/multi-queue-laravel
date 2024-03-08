@@ -28,3 +28,6 @@ php artisan queue:work --queue=high
 php artisan queue:work --queue=high,low,default
 php artisan queue:work --queue=low,high,default
 ```
+
+# Horizon
+- arquivo é possivel definir max e min de processos

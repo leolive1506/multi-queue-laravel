@@ -182,8 +182,8 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default'],
-            'balance' => 'auto',
+            'queue' => ['default', 'high', 'low'],
+            'balance' => 'auto', // simple (igualmente entre os processos), auto (de acordo com a fila faz o rebalanceamento), false
             'autoScalingStrategy' => 'time',
             'maxProcesses' => 1,
             'maxTime' => 0,
@@ -199,14 +199,14 @@ return [
         'production' => [
             'supervisor-1' => [
                 'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
+                'balanceMaxShift' => 1, // quantos processos mandar de acordo com balanceCooldown
+                'balanceCooldown' => 3, // a quantos segundos vazer o rebalanceamento de cargas
             ],
         ],
 
         'local' => [
             'supervisor-1' => [
-                'maxProcesses' => 3,
+                'maxProcesses' => 9,
             ],
         ],
     ],
